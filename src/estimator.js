@@ -1,3 +1,45 @@
-const covid19ImpactEstimator = (data) => data;
-
+const covid19ImpactEstimator = (data) => {
+  const input = data;
+  let days;
+  let sets;
+  let factor;
+  if (input.periodType === 'days') {
+    days = input.timeToElapse;
+    factor = Math.floor(days / 3);
+    sets = 2 ** factor;
+  } else if (input.periodType === 'weeks') {
+    days = input.timeToElapse * 7;
+    factor = Math.floor((days) / 3);
+    sets = 2 ** factor;
+  } else if (input.periodType === 'months') {
+    days = input.timeToElapse * 30;
+    factor = Math.floor((days) / 3);
+    sets = 2 ** factor;
+  }
+  return {
+    data: input,
+    impact: {
+      currentlyInfected: input.reportedCases * 10,
+      infectionsByRequestedTime: input.reportedCases * 10 * sets,
+      severeCasesByRequestedTime: Math.floor(0.15 * (input.reportedCases * 10 * sets)),
+      hospitalBedsByRequestedTime: (Math.floor(0.35 * input.totalHospitalBeds))
+      - (Math.floor(0.15 * (input.reportedCases * 10 * sets))),
+      casesForICUByRequestedTime: Math.floor(0.05 * (input.reportedCases * 10 * sets)),
+      casesForVentilatorsByRequestedTime: Math.floor(0.02 * (input.reportedCases * 10 * sets)),
+      dollarsInFlight: ((input.reportedCases * 10 * sets) * (input.region.avgDailyIncomePopulation)
+       * (input.region.avgDailyIncomeInUSD) * days).toFixed(2)
+    },
+    severeImpact: {
+      currentlyInfected: input.reportedCases * 50,
+      infectionsByRequestedTime: input.reportedCases * 50 * sets,
+      severeCasesByRequestedTime: 0.15 * (input.reportedCases * 50 * sets),
+      hospitalBedsByRequestedTime: (Math.floor(0.35 * input.totalHospitalBeds))
+      - (Math.floor(0.15 * (input.reportedCases * 50 * sets))),
+      casesForICUByRequestedTime: Math.floor(0.05 * (input.reportedCases * 50 * sets)),
+      casesForVentilatorsByRequestedTime: Math.floor(0.02 * (input.reportedCases * 50 * sets)),
+      dollarsInFlight: ((input.reportedCases * 50 * sets) * (input.region.avgDailyIncomePopulation)
+       * (input.region.avgDailyIncomeInUSD) * days).toFixed(2)
+    }
+  };
+};
 export default covid19ImpactEstimator;
