@@ -22,12 +22,12 @@ const covid19ImpactEstimator = (data) => {
       currentlyInfected: input.reportedCases * 10,
       infectionsByRequestedTime: input.reportedCases * 10 * sets,
       severeCasesByRequestedTime: Math.floor(0.15 * (input.reportedCases * 10 * sets)),
-      hospitalBedsByRequestedTime: Math.floor(0.35 * (Math.floor(0.35 * input.totalHospitalBeds)))
-      - (Math.floor(0.15 * (input.reportedCases * 10 * sets))),
+      hospitalBedsByRequestedTime: Math.floor(0.35 * input.totalHospitalBeds)
+      - Math.floor(0.15 * (input.reportedCases * 10 * sets)),
       casesForICUByRequestedTime: Math.floor(0.05 * (input.reportedCases * 10 * sets)),
       casesForVentilatorsByRequestedTime: Math.floor(0.02 * (input.reportedCases * 10 * sets)),
-      dollarsInFlight: Math.floor(((input.reportedCases * 10 * sets)
-       * (input.region.avgDailyIncomePopulation) * (input.region.avgDailyIncomeInUSD) * days))
+      dollarsInFlight: ((input.reportedCases * 10 * sets) * (input.region.avgDailyIncomePopulation)
+       * (input.region.avgDailyIncomeInUSD) * days).toFixed(2)
     },
     severeImpact: {
       currentlyInfected: input.reportedCases * 50,
