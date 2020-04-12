@@ -35,9 +35,9 @@ const covid19ImpactEstimator = (data) => {
     - Math.floor(0.15 * (input.reportedCases * 10 * sets))),
       casesForICUByRequestedTime: Math.floor(0.05 * (input.reportedCases * 10 * sets)),
       casesForVentilatorsByRequestedTime: Math.floor(0.02 * (input.reportedCases * 10 * sets)),
-      dollarsInFlight: Math.floor(((input.reportedCases * 10 * sets)
-       * (input.region.avgDailyIncomePopulation)
-     * (input.region.avgDailyIncomeInUSD)) / days)
+      dollarsInFlight: Math.floor((input.reportedCases * 10 * sets
+       * input.region.avgDailyIncomePopulation
+     * input.region.avgDailyIncomeInUSD) / days)
     },
     severeImpact: {
       currentlyInfected: input.reportedCases * 50,
@@ -47,9 +47,9 @@ const covid19ImpactEstimator = (data) => {
     - Math.floor(0.15 * (input.reportedCases * 50 * sets))),
       casesForICUByRequestedTime: Math.floor(0.05 * (input.reportedCases * 50 * sets)),
       casesForVentilatorsByRequestedTime: Math.floor(0.02 * (input.reportedCases * 50 * sets)),
-      dollarsInFlight: Math.floor(((input.reportedCases * 50 * sets)
-      * (input.region.avgDailyIncomePopulation)
-     * (input.region.avgDailyIncomeInUSD) * days))
+      dollarsInFlight: Math.floor((input.reportedCases * 50 * sets
+      * input.region.avgDailyIncomePopulation
+     * input.region.avgDailyIncomeInUSD) / days)
     }
   };
 };
