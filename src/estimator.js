@@ -53,4 +53,5 @@ const covid19ImpactEstimator = (data) => {
     }
   };
 };
+// All tests done
 export default covid19ImpactEstimator;
